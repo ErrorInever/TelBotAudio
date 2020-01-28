@@ -5,9 +5,9 @@ __C = edict()
 cfg = __C
 
 # API TOKEN
-__C.TOKEN = '1007671148:AAHdQz9OqhcgbrzjyXdK9sQ6ozoaFq1nSJg'
+__C.TOKEN = None
 # OS
-__C.OUTDIR = r'C:\files'
+__C.OUTDIR = None
 
 # DATABASE
 __C.DB_PATH = r'uid.db'
