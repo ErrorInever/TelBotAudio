@@ -12,6 +12,15 @@ def dir_exists(path):
         return False
 
 
+def downsample(audio, khz=16000):
+    """change sample rate
+    :return instance of AudioSegment
+    """
+    if not isinstance(audio, AudioSegment):
+        raise TypeError('except {}, but get {}'.format(AudioSegment.__name__, type(audio)))
+    return audio.set_frame_rate(khz)
+
+
 def save_voice(user_id, file_id):
     """ saving voice message to disk and make a note in database"""
     path = os.path.join(cfg.OUTDIR, str(user_id))
@@ -27,17 +36,19 @@ def save_voice(user_id, file_id):
     with open(path_to_file, 'wb') as f:
         f.write(file)
 
+    # FIXME: remove from this function
     path_to_voice = os.path.join(str(user_id), 'voice')
     database.insert_voice_message(user_id, os.path.join(path_to_voice, file_name))
-    convert_to_wav(user_id)
 
 
 def convert_to_wav(uid):
-    """convert all voice messages of user to wav format with 16kHZ
+    """convert all voice messages of user.
+    ogg/oga to wav format and downsample to 16kHz
     :argument uid: int, user_id
     """
-    if not isinstance(uid, int):
-        raise TypeError('except int, but get {}'.format(uid))
-
     for path in database.get_paths_voice_of_user(uid):
-        print(path)
+        file_name = os.path.splitext(os.path.basename(path))[0]
+
+        voice_msg = AudioSegment.from_ogg(os.path.join(cfg.OUTDIR, path))
+        voice_msg = downsample(voice_msg)
+        voice_msg.export(file_name + ".wav", format="wav")
