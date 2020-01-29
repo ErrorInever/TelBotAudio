@@ -5,10 +5,20 @@ from utils.cfg import cfg
 from model import functions
 
 
+def extract_args(arg):
+    return arg.split()[1:]
+
+
 @bot.message_handler(commands=['status'])
 def start_message(message):
     """check auth"""
     bot.send_message(message.chat.id, bot.get_me())
+
+
+@bot.message_handler(commands=['convert'])
+def convert_voice_msg_user(message):
+    uid = extract_args(message.text)
+    functions.convert_to_wav(uid)
 
 
 @bot.message_handler(content_types=['voice', 'photo'])
