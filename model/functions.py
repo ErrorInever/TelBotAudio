@@ -2,6 +2,7 @@ import os
 import utils.data_base as database
 from model.bot import bot
 from utils.cfg import cfg
+from pydub import AudioSegment
 
 
 def dir_exists(path):
@@ -26,12 +27,17 @@ def save_voice(user_id, file_id):
     with open(path_to_file, 'wb') as f:
         f.write(file)
 
-    database.insert_voice_message(user_id, path_to_file)
+    path_to_voice = os.path.join(str(user_id), 'voice')
+    database.insert_voice_message(user_id, os.path.join(path_to_voice, file_name))
+    convert_to_wav(user_id)
 
 
 def convert_to_wav(uid):
-    """convert all user voice messages to wav format
+    """convert all voice messages of user to wav format with 16kHZ
     :argument uid: int, user_id
     """
     if not isinstance(uid, int):
         raise TypeError('except int, but get {}'.format(uid))
+
+    for path in database.get_paths_voice_of_user(uid):
+        print(path)
