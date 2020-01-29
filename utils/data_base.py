@@ -43,7 +43,12 @@ def insert_voice_message(user_id, path_voice_msg):
     sql_query_execute(cfg.SQL_INSERT_QUERY_VOICE, (user_id, path_voice_msg))
 
 
-def select_all_voices_of_user(user_id):
-    res = sql_query_execute(cfg.SQL_SELECT_QUERY_VOICE, (user_id,), select=True)
-    for row in res:
-        print(row)
+def get_paths_voice_of_user(user_id):
+    """return generator which selects all voice messages of user_id and return path to voice message file"""
+    rows = sql_query_execute(cfg.SQL_SELECT_QUERY_VOICE, (user_id,), select=True)
+    rows = [x[0] for x in rows]
+    yield from rows
+
+
+def clear_table():
+    sql_query_execute(cfg.SQL_CLEAR_TABLE)
