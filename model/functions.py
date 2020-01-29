@@ -36,7 +36,6 @@ def save_voice(user_id, file_id):
     with open(path_to_file, 'wb') as f:
         f.write(file)
 
-    # FIXME: remove from this function
     path_to_voice = os.path.join(str(user_id), 'voice')
     database.insert_voice_message(user_id, os.path.join(path_to_voice, file_name))
 
@@ -46,9 +45,14 @@ def convert_to_wav(uid):
     ogg/oga to wav format and downsample to 16kHz
     :argument uid: int, user_id
     """
+    save_path = os.path.join(cfg.OUT_DIR_WAV, uid)
+    if not dir_exists(save_path):
+        os.makedirs(save_path)
+
     for path in database.get_paths_voice_of_user(uid):
-        file_name = os.path.splitext(os.path.basename(path))[0]
+        file_name = os.path.splitext(os.path.basename(path))[0] + ".wav"
 
         voice_msg = AudioSegment.from_ogg(os.path.join(cfg.OUTDIR, path))
         voice_msg = downsample(voice_msg)
-        voice_msg.export(file_name + ".wav", format="wav")
+
+        voice_msg.export(os.path.join(save_path, file_name), format="wav")

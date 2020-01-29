@@ -8,6 +8,7 @@ cfg = __C
 __C.TOKEN = None
 # OS
 __C.OUTDIR = None
+__C.OUT_DIR_WAV = None
 
 # DATABASE
 __C.DB_PATH = r'uid.db'

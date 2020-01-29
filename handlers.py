@@ -17,7 +17,10 @@ def start_message(message):
 
 @bot.message_handler(commands=['convert'])
 def convert_voice_msg_user(message):
-    uid = extract_args(message.text)
+    """
+    convert all voice message of user
+    /convert uid """
+    uid = extract_args(message.text)[0]
     functions.convert_to_wav(uid)
 
 
