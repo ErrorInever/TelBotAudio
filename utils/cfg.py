@@ -21,3 +21,4 @@ __C.DB_PATH = r'uid.db'
 
 __C.SQL_INSERT_QUERY_VOICE = """INSERT INTO voices (uid, voice_path) VALUES (?, ?)"""
 __C.SQL_SELECT_QUERY_VOICE = """SELECT voice_path FROM voices WHERE uid == (?)"""
+__C.SQL_CLEAR_TABLE = """DELETE FROM voices"""
