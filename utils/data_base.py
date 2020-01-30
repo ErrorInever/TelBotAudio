@@ -18,11 +18,10 @@ class ConnectSQL:
 
 def sql_query_execute(query, *args, select=False):
     """
-    Connect to database and execute query
-    :param query: string sql query
+    Connects to database and executes a query
+    :param query: string of sql query
     :param args: list of arguments for query
-
-    if select=True: return all rows of a query result
+    if select=True: returns all rows of a query result
     """
     with ConnectSQL(cfg.DB_PATH) as connect:
         cursor = connect.cursor()
@@ -39,16 +38,22 @@ def sql_query_execute(query, *args, select=False):
 
 
 def insert_voice_message(user_id, path_voice_msg):
-    """insert in table :voices: uid - path to voice message file"""
+    """insert in table :voices: uid - path to voice message file
+    :param user_id: int
+    :param path_voice_msg: str, path to voice message file
+    """
     sql_query_execute(cfg.SQL_INSERT_QUERY_VOICE, (user_id, path_voice_msg))
 
 
 def get_paths_voice_of_user(user_id):
-    """return generator which selects all voice messages of user_id and return path to voice message file"""
+    """Returns generator which selects all voice messages of user_id and returns path to voice message file
+    :param user_id: int
+    """
     rows = sql_query_execute(cfg.SQL_SELECT_QUERY_VOICE, (user_id,), select=True)
     rows = [x[0] for x in rows]
     yield from rows
 
 
 def clear_table():
+    """deletes all records from table"""
     sql_query_execute(cfg.SQL_CLEAR_TABLE)
