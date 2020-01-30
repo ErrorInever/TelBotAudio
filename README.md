@@ -1,5 +1,7 @@
 # Simple telegram bot
 
+A simple bot which saves voice messages or photos of users (if there are faces in photos)
+
 ### Start
 1. > pip install -r requirements.txt 
 2. edit **utils/cfg.py** i.e. add paths and an api token
