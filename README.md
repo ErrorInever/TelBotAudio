@@ -1,6 +1,6 @@
 # Simple telegram bot
 
-A simple bot which saves voice messages or photos of users (if there are faces in photos)
+A simple bot which saves voice messages or photos of users (if there are faces in photos), in addition, can downsampling and converts voice messages to wav.
 
 ### Start
 1. > pip install -r requirements.txt 
