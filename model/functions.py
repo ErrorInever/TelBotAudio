@@ -56,6 +56,7 @@ def save_voice(user_id, file_id):
 def convert_to_wav(uid):
     """convert all voice messages of user.
     ogg/oga to wav format and downsample to 16kHz
+    :return path
     """
     save_path = os.path.join(cfg.OUT_DIR_WAV, uid)
     if not os.path.exists(save_path):
@@ -71,6 +72,8 @@ def convert_to_wav(uid):
         else:
             voice_msg = downsample(voice_msg)
             voice_msg.export(os.path.join(save_path, file_name), format="wav")
+
+    return save_path
 
 
 def detect_face(img):

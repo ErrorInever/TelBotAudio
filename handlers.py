@@ -1,8 +1,7 @@
 from model.bot import bot
-from telebot import apihelper
-from utils import cmd, data_base
-from utils.cfg import cfg
+from utils import data_base
 from model import functions
+from utils.cfg import cfg
 
 
 def extract_args(arg):
@@ -26,7 +25,8 @@ def clear_database(message):
 def convert_voice_msg_user(message):
     """convert all voice message of user to wav"""
     uid = extract_args(message.text)[0]
-    functions.convert_to_wav(uid)
+    path = functions.convert_to_wav(uid)
+    bot.send_message(message.chat.id, 'Done, files location: {}'.format(path))
 
 
 @bot.message_handler(content_types=['voice', 'photo'])
@@ -46,13 +46,6 @@ def get_attachments(message):
 
 
 if __name__ == '__main__':
-    args = cmd.parse_args()
-    if cfg.OUTDIR is None:
-        if args.path:
-            cfg.OUTDIR = args.path
-        else:
-            raise NotADirectoryError('path to file directory not specified')
-    elif args.proxy:
-        apihelper.proxy = {'http': args.proxy}
-
+    if (cfg.TOKEN and cfg.OUTDIR and cfg.OUT_DIR_WAV) is None:
+        raise RuntimeError("Config values is empty")
     bot.polling(none_stop=True)

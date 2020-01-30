@@ -14,7 +14,6 @@ __C.TOKEN = None
 __C.OUTDIR = None
 # path to directory where converted files will be stored
 __C.OUT_DIR_WAV = None
-
 # path to database
 __C.DB_PATH = r'uid.db'
 
