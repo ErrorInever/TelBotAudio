@@ -2,7 +2,7 @@
 
 A simple bot which saves voice messages or photos of users (if there are faces in photos), in addition, can downsampling and converts voice messages to wav.
 
-works on python 3.7.
+# works on python 3.7 and lower
 
 ### Start
 1. > pip install -r requirements.txt 
@@ -18,6 +18,7 @@ works on python 3.7.
     # path to database
     __C.DB_PATH = r'uid.db'
     ```
+ 3. from command line execute **python handlers.py**
     
-Commands:
-1. /convert uid - converts all voice messages which are stored on disk.
+Bot Commands:
+/convert user_id - converts all voice messages of user_id for all records from database.
