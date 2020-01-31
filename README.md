@@ -21,4 +21,5 @@ A simple bot which saves voice messages or photos of users (if there are faces i
  3. from command line execute **python handlers.py**
     
 Bot Commands:
+
 /convert user_id - converts all voice messages of user_id for all records from database.
